@@ -19,13 +19,15 @@ object testSetup {
     println("Test Figaro OK")
 
     println("Test Spark")
+    //Create the conf and the context
     val conf = new SparkConf()
       .setMaster("local[*]")
       .setAppName("Test Spark")
       .set("spark.executor.memory","2g")
     val sc = new SparkContext(conf)
 
-    val lines = sc.parallelize(Seq("this is first line", "this is seconf line", "this is third line"))
+    //Create the data
+    val lines = sc.parallelize(Seq("this is first line", "this is second line", "this is third line"))
     val counts = lines.flatMap(line => line.split(" "))
       .map(word => (word,1))
       .reduceByKey(_+_)
